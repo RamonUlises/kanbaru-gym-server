@@ -1,0 +1,76 @@
+{
+  "clientes": [
+    {
+      "id": "1",
+      "nombres": "Carlos Castillo",
+      "fechaNacimiento": "1990-01-01",
+      "correoElectronico": "carlos@gmail.com",
+      "telefono": "123456789",
+      "sexo": "masculino"
+    },
+    {
+      "id": "2",
+      "nombres": "Maria Carmela",
+      "fechaNacimiento": "1990-02-01",
+      "correoElectronico": "maria@gmail.com",
+      "telefono": "123456789",
+      "sexo": "femenino"
+    }
+  ],
+  "administradores": [
+    {
+      "id": "1",
+      "usuario": "Ramon",
+      "contrasena": "123456789"
+    },
+    {
+      "id": "2",
+      "usuario": "Moises",
+      "contrasena": "123456789"
+    }
+  ],
+  "pagos": [
+    {
+      "id": "1",
+      "idCliente": "1",
+      "cliente": "Carlos Castillo",
+      "fechaInicio": "2023-01-01",
+      "fechaFin": "2023-02-01",
+      "membresia": "mensual",
+      "monto": 800,
+      "administrador": "Ramon"
+    },
+    {
+      "id": "2",
+      "idCliente": "2",
+      "cliente": "Maria Carmela",
+      "fechaInicio": "2023-02-10",
+      "fechaFin": "2023-02-18",
+      "membresia": "semanal",
+      "monto": 250,
+      "administrador": "Moises"
+    }
+  ],
+  "entrenadores": [
+    {
+      "id": "1",
+      "nombres": "Rubén Herrera",
+      "fechaNacimiento": "1990-01-01",
+      "especialidad": "cardio",
+      "experiencia": 5,
+      "correoElectronico": "ruben@gmail.com",
+      "telefono": "123456789",
+      "sexo": "masculino"
+    },
+    {
+      "id": "2",
+      "nombres": "Soyla Vaca",
+      "fechaNacimiento": "1990-02-01",
+      "especialidad": "sexología",
+      "experiencia": 3,
+      "correoElectronico": "soyla@gmail.com",
+      "telefono": "123456789",
+      "sexo": "femenino"
+    }
+  ]
+}
