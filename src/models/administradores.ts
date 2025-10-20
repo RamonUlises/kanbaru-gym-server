@@ -11,9 +11,9 @@ class AdministradorModel {
       return 'Error al obtener administradores';
     }
   }
-  async obtenerAdministrador(id: string) {
+  async obtenerAdministrador(usuario: string) {
     try {
-      const administrador = await AdministradoresSchemas.findOne({ id });
+      const administrador = await AdministradoresSchemas.findOne({ usuario });
 
       return administrador;
     } catch {
