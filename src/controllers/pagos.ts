@@ -7,7 +7,11 @@ class PagoController {
     try {
       const pagos = await PagosModel.obtenerPagos();
 
-      return pagos;
+      if(pagos.length === 0) {
+        return res.status(404).json({ message: 'No hay pagos' });
+      }
+
+      return res.status(200).json({ pagos });
     } catch {
       res.status(500).json({ message: 'Error al obtener pagos' });
     }
