@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import EntrenadoresModels from '../models/entrenadores';
+import { dateRegex, emailRegex, nameRegex, phoneRegex } from '@/utils/regex';
 
 class EntrenadoresController {
   async obtenerEntrenadores(req: Request, res: Response) {
@@ -40,6 +41,26 @@ class EntrenadoresController {
         !sexo
       ) {
         return res.status(400).json({ message: 'Faltan datos' });
+      }
+
+      if (!nameRegex.test(nombres)) {
+        res.status(400).json({ message: 'Nombres inválidos' });
+        return;
+      }
+
+      if (!emailRegex.test(correoElectronico)) {
+        res.status(400).json({ message: 'Correo inválido' });
+        return;
+      }
+
+      if (!dateRegex.test(fechaNacimiento)) {
+        res.status(400).json({ message: 'Fecha de nacimiento inválida' });
+        return;
+      }
+
+      if (!phoneRegex.test(telefono)) {
+        res.status(400).json({ message: 'Telefono inválido' });
+        return;
       }
 
       const response = await EntrenadoresModels.crearEntrenador({
@@ -91,6 +112,26 @@ class EntrenadoresController {
         !sexo
       ) {
         return res.status(400).json({ message: 'Faltan datos' });
+      }
+
+      if (!nameRegex.test(nombres)) {
+        res.status(400).json({ message: 'Nombres inválidos' });
+        return;
+      }
+
+      if (!emailRegex.test(correoElectronico)) {
+        res.status(400).json({ message: 'Correo inválido' });
+        return;
+      }
+
+      if (!dateRegex.test(fechaNacimiento)) {
+        res.status(400).json({ message: 'Fecha de nacimiento inválida' });
+        return;
+      }
+
+      if (!phoneRegex.test(telefono)) {
+        res.status(400).json({ message: 'Telefono inválido' });
+        return;
       }
 
       const response = await EntrenadoresModels.actualizarEntrenador({
