@@ -52,6 +52,8 @@ class PagosModel {
         administrador,
       });
 
+      //await ClientesSchemas.findOneAndUpdate({ id: idCliente }, { activo: true });
+
       return 'Pago creado';
     } catch {
       return 'Error al crear pago';
@@ -65,6 +67,14 @@ class PagosModel {
         return 'No existe el pago';
       }
 
+      const fechaInicio = new Date(pago.fechaInicio);
+      const hoy = new Date();
+      hoy.setHours(0, 0, 0, 0);
+
+      if(hoy >= fechaInicio) {
+        return 'No se puede eliminar el pago ya que está activo';
+      }
+      
       await PagosSchemas.findOneAndDelete({ id });
 
       return 'Pago eliminado';
