@@ -1,3 +1,4 @@
+import { ClientesSchemas } from '@/schemas/clientes';
 import { PagosSchemas } from '@/schemas/pagos';
 import crypto from 'node:crypto';
 
@@ -29,6 +30,12 @@ class PagosModel {
     administrador: string;
   }) {
     try {
+      const clientee = await ClientesSchemas.findOne({ id: idCliente });
+
+      if (!clientee) {
+        return 'No existe el cliente';
+      }
+
       const pagoExistente = await PagosSchemas.find({ idCliente, activo: true });
       
       if (pagoExistente.length > 0) {

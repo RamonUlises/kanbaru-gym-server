@@ -1,4 +1,5 @@
 import PagosModel from '@/models/pagos';
+import { dateRegex } from '@/utils/regex';
 import { Request, Response } from 'express';
 
 class PagoController {
@@ -13,7 +14,15 @@ class PagoController {
   }
   async crearPago(req: Request, res: Response) {
     try {
-      const { idCliente, cliente, fechaInicio, fechaFin, membresia, monto, administrador } = req.body as {
+      const {
+        idCliente,
+        cliente,
+        fechaInicio,
+        fechaFin,
+        membresia,
+        monto,
+        administrador,
+      } = req.body as {
         idCliente: string;
         cliente: string;
         fechaInicio: string;
@@ -23,8 +32,31 @@ class PagoController {
         administrador: string;
       };
 
-      if(!idCliente || !cliente || !fechaInicio || !fechaFin || !membresia || !monto || !administrador) {
+      if (
+        !idCliente ||
+        !cliente ||
+        !fechaInicio ||
+        !fechaFin ||
+        !membresia ||
+        !monto ||
+        !administrador
+      ) {
         return res.status(400).json({ message: 'Faltan datos' });
+      }
+
+      if (!dateRegex.test(fechaInicio)) {
+        res.status(400).json({ message: 'Fecha de inicio inválida' });
+        return;
+      }
+
+      if (!dateRegex.test(fechaFin)) {
+        res.status(400).json({ message: 'Fecha de fin inválida' });
+        return;
+      }
+
+      if (isNaN(monto)) {
+        res.status(400).json({ message: 'Monto inválido' });
+        return;
       }
 
       const response = await PagosModel.crearPago({
@@ -37,7 +69,7 @@ class PagoController {
         administrador,
       });
 
-      if(response !== 'Pago creado') {
+      if (response !== 'Pago creado') {
         return res.status(500).json({ message: response });
       }
 
@@ -50,13 +82,13 @@ class PagoController {
     try {
       const { id } = req.params as { id: string };
 
-      if(!id) {
+      if (!id) {
         return res.status(400).json({ message: 'Falta el id del pago' });
       }
 
       const response = await PagosModel.eliminarPago(id);
 
-      if(response !== 'Pago eliminado') {
+      if (response !== 'Pago eliminado') {
         return res.status(500).json({ message: response });
       }
 
