@@ -7,6 +7,7 @@ const clientesSchema = new mongoose.Schema({
   correoElectronico: { type: String },
   telefono: { type: String },
   sexo: { type: String, required: true },
+  activo: { type: Boolean, default: false },
 });
 
 export const ClientesSchemas = mongoose.model('Clientes', clientesSchema);

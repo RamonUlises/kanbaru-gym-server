@@ -160,6 +160,11 @@ class ClienteController {
         return;
       }
 
+      if(response !== 'Cliente actualizado'){
+        res.status(500).json({ message: response });
+        return;
+      }
+
       res.status(200).json({ message: response });
     } catch {
       res.status(500).json({ message: 'Error al actualizar cliente' });

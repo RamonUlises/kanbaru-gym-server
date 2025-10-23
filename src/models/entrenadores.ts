@@ -32,6 +32,18 @@ class EntrenadorModel {
     try {
       const id = crypto.randomUUID();
 
+      const entrenador1 = await EntrenadoresSchemas.findOne({ correoElectronico });
+
+      if (entrenador1?.correoElectronico === correoElectronico) {
+        return 'El correo electrónico ya está en uso';
+      }
+
+      const entrenador2 = await EntrenadoresSchemas.findOne({ telefono });
+
+      if (entrenador2?.telefono === telefono) {
+        return 'El telefono ya está en uso';
+      }
+
       await EntrenadoresSchemas.create({
         id,
         nombres,
@@ -63,6 +75,18 @@ class EntrenadorModel {
 
       if (!entrenador) {
         return 'No existe el entrenador';
+      }
+
+      const entrenador1 = await EntrenadoresSchemas.findOne({ correoElectronico });
+
+      if (entrenador1?.correoElectronico === correoElectronico && entrenador1.id !== id) {
+        return 'El correo electrónico ya está en uso';
+      }
+
+      const entrenador2 = await EntrenadoresSchemas.findOne({ telefono });
+
+      if (entrenador2?.telefono === telefono && entrenador2.id !== id) {
+        return 'El telefono ya está en uso';
       }
 
       await EntrenadoresSchemas.findOneAndUpdate(

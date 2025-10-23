@@ -36,6 +36,18 @@ class ClienteModel {
     try {
       const id = crypto.randomUUID();
 
+      const cliente1 = await ClientesSchemas.find({ correoElectronico });
+
+      if (cliente1.length > 0) {
+        return 'El correo electrónico ya está en uso';
+      }
+
+      const cliente2 = await ClientesSchemas.find({ telefono });
+
+      if (cliente2.length > 0) {
+        return 'El telefono ya está en uso';
+      }
+
       await ClientesSchemas.create({
         id,
         nombres,
@@ -70,6 +82,18 @@ class ClienteModel {
 
       if (!cliente) {
         return 'No existe el cliente';
+      }
+
+      const cliente1 = await ClientesSchemas.findOne({ correoElectronico });
+
+      if (cliente1?.correoElectronico === correoElectronico && cliente1.id !== id) {
+        return 'El correo electrónico ya está en uso';
+      }
+
+      const cliente2 = await ClientesSchemas.findOne({ telefono });
+
+      if (cliente2?.telefono === telefono && cliente2.id !== id) {
+        return 'El telefono ya está en uso';
       }
 
       await ClientesSchemas.findOneAndUpdate(
