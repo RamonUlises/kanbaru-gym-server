@@ -32,16 +32,29 @@ class PagosModel {
     try {
       const clientee = await ClientesSchemas.findOne({ id: idCliente });
 
-      if (!clientee) {
-        return 'No existe el cliente';
-      }
+      if (!clientee) return 'No existe el cliente';
 
-      const pagoExistente = await PagosSchemas.find({ idCliente, activo: true });
-      
-      if (pagoExistente.length > 0) {
-        for (const pago of pagoExistente) { 
-          if (fechaInicio > pago.fechaFin) {
-            return 'La fecha inicio no puede ser mayor a la fecha fin de los pagos existentes';
+      const nuevaInicio = new Date(fechaInicio);
+      const nuevaFin = new Date(fechaFin);
+
+      const pagosActivos = await PagosSchemas.find({ idCliente, activo: true });
+
+      for (const pago of pagosActivos) {
+        const pagoInicio = new Date(pago.fechaInicio);
+        const pagoFin = new Date(pago.fechaFin);
+
+        const seSolapan = nuevaInicio <= pagoFin && nuevaFin >= pagoInicio;
+
+        if (seSolapan) {
+          return `Ya existe un pago activo entre ${pago.fechaInicio} y ${pago.fechaFin}`;
+        }
+
+        if (pago.membresia === 'semanal') {
+          const limite = new Date(pagoFin);
+          limite.setDate(limite.getDate() + 7);
+
+          if (nuevaInicio <= limite && nuevaInicio >= pagoInicio) {
+            return `Ya existe un pago semanal activo o dentro del rango de 7 días posteriores (${pago.fechaInicio} - ${pago.fechaFin})`;
           }
         }
       }
@@ -78,10 +91,10 @@ class PagosModel {
       const hoy = new Date();
       hoy.setHours(0, 0, 0, 0);
 
-      if(hoy >= fechaInicio) {
+      if (hoy >= fechaInicio) {
         return 'No se puede eliminar el pago ya que está activo';
       }
-      
+
       await PagosSchemas.findOneAndDelete({ id });
 
       return 'Pago eliminado';
