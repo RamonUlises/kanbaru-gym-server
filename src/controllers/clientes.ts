@@ -84,7 +84,7 @@ class ClienteController {
       });
 
       if (response.error !== 'Cliente creado') {
-        res.status(500).json({ message: response });
+        res.status(500).json({ message: response.error });
         return;
       }
 
