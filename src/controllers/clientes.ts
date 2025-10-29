@@ -83,12 +83,12 @@ class ClienteController {
         sexo,
       });
 
-      if (response !== 'Cliente creado') {
+      if (response.error !== 'Cliente creado') {
         res.status(500).json({ message: response });
         return;
       }
 
-      res.status(200).json({ message: response });
+      res.status(200).json({ message: response.error, id: response.id });
     } catch {
       res.status(500).json({ message: 'Error al crear cliente' });
     }

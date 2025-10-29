@@ -34,19 +34,19 @@ class ClienteModel {
     sexo: string;
   }) {
     try {
-      const id = crypto.randomUUID();
-
       const cliente1 = await ClientesSchemas.find({ correoElectronico });
-
+      
       if (cliente1.length > 0) {
-        return 'El correo electrónico ya está en uso';
+        return { error: 'El correo electrónico ya está en uso', id: null };
       }
-
+      
       const cliente2 = await ClientesSchemas.find({ telefono });
-
+      
       if (cliente2.length > 0) {
-        return 'El telefono ya está en uso';
+        return { error: 'El telefono ya está en uso', id: null };
       }
+
+      const id = crypto.randomUUID();
 
       await ClientesSchemas.create({
         id,
@@ -57,9 +57,9 @@ class ClienteModel {
         sexo,
       });
 
-      return 'Cliente creado';
+      return { error: 'Cliente creado' , id };
     } catch {
-      return 'Error al crear cliente';
+      return { error: 'Error al crear cliente', id: null };
     }
   }
   async actualizarCliente({
