@@ -14,4 +14,8 @@ router.delete('/:id', (req, res) => {
   void PagosControllers.eliminarPago(req, res);
 });
 
+router.get('/cliente/:idCliente', (req, res) => {
+  void PagosControllers.obtenerPagosCliente(req, res);
+});
+
 export default router;

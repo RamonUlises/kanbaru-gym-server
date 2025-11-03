@@ -12,6 +12,15 @@ class PagosModel {
       return 'Error al obtener pagos';
     }
   }
+  async obtenerPagoCliente(idCliente: string) {
+    try {
+      const pagos = await PagosSchemas.find({ idCliente });
+
+      return pagos;
+    } catch {
+      return 'Error al obtener pagos';
+    }
+  }
   async crearPago({
     idCliente,
     cliente,
