@@ -69,6 +69,10 @@ class PagosModel {
       }
 
       const id = crypto.randomUUID();
+      const hoy = new Date();
+      hoy.setHours(0, 0, 0, 0);
+
+      const activo = hoy >= nuevaInicio && hoy <= nuevaFin;
 
       await PagosSchemas.create({
         id,
@@ -79,9 +83,12 @@ class PagosModel {
         membresia,
         monto,
         administrador,
+        activo,
       });
 
-      //await ClientesSchemas.findOneAndUpdate({ id: idCliente }, { activo: true });
+      if(activo) {
+        await ClientesSchemas.findOneAndUpdate({ id: idCliente }, { activo: true });
+      };
 
       return 'Pago creado';
     } catch {

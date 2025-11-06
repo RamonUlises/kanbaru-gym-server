@@ -2,7 +2,9 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import morgan from 'morgan';
+
 import './database/connection';
+import './lib/cronJob';
 
 import clientes from './router/clientes';
 import pagos from './router/pagos';
