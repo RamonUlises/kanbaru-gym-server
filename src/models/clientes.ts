@@ -1,4 +1,5 @@
 import { ClientesSchemas } from '@/schemas/clientes';
+import { PagosSchemas } from '@/schemas/pagos';
 import crypto from 'node:crypto';
 
 class ClienteModel {
@@ -106,6 +107,8 @@ class ClienteModel {
           sexo,
         },
       );
+
+      await PagosSchemas.updateMany({ idCliente: id }, { cliente: nombres });
 
       return 'Cliente actualizado';
     } catch {
